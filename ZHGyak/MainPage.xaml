@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ZHGyak.MainPage">
+
+    <Grid Margin="10" RowDefinitions="*, auto">
+        <CollectionView ItemsSource="{Binding Items}"
+                        SelectedItem="{Binding SelectedItem}" SelectionMode="Single">
+            
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="Gray" StrokeShape="20" Margin="10, 0">
+
+
+                        <Grid ColumnDefinitions="*,*,3*">
+                            <CheckBox IsChecked="{Binding IsOwn}" />
+                            <Image Source="{Binding ImageSource}" Grid.Column="1"/>
+
+                            <StackLayout Grid.Column="2">
+                                <Label Text="{Binding Name}" />
+                                <Label Text="{Binding Description}" />
+                                <Label Text="{Binding Quantity, StringFormat=Quantity{0}}" />
+                            </StackLayout>
+
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            
+            
+        </CollectionView>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,*">
+            <Button Text="Add new Item" Command="{Binding C_AddItem}" Background="MidnightBlue" FontAttributes="Bold" Grid.Column="0"/>
+            <Button Text="Remove Item" Command="{Binding C_RemoveItem}" Background="MidnightBlue" FontAttributes="Bold"  Grid.Column="1"/>
+            <Button Text="Share Item" Command="{Binding C_ShareItem}" Background="MidnightBlue" FontAttributes="Bold"  Grid.Column="2"/>
+        </Grid>
+    </Grid>
+
+</ContentPage>
