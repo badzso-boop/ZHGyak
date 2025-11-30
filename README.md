@@ -90,6 +90,38 @@ builder.Services.AddTransient<AddPage>();
 builder.Services.AddTransient<AddPageViewModel>();
 ```
 
+### 1.4 View és ViewModel összekötése (Code-behind)
+A ViewModel-t a View (az oldal) konstruktorában kérjük el (Dependency Injection), és beállítjuk a `BindingContext`-et. Így tud a XAML hozzáférni a ViewModel adataihoz.
+
+```csharp
+// MainPage.xaml.cs
+public partial class MainPage : ContentPage
+{
+    MainPageViewModel viewModel;
+    // A rendszer automatikusan beadja a regisztrált ViewModel példányt
+    public MainPage(MainPageViewModel vm)
+    {
+        InitializeComponent();
+        
+        // Összekötés: A felület (View) kötési forrása a ViewModel lesz
+        this.viewModel = vm;
+        this.BindingContext = viewModel;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        this.viewModel.Load();
+    }
+
+    protected override void OnDisappearing()
+    {
+        base.OnDisappearing();
+        this.viewModel.Save();
+    }
+}
+```
+
 ## 2. UI és XAML Alapok (Részletesen)
 
 A felületet XAML nyelven definiáljuk. Minden oldalnak (`ContentPage`) van egy `BindingContext`-e (a ViewModel), amit általában a code-behindban (`.xaml.cs`) állítunk be Dependency Injection segítségével.
